@@ -5,7 +5,8 @@ import { faEye } from '@fortawesome/free-solid-svg-icons'
 import { IconButton } from '#/components/IconButton'
 
 function LoginForm() {
-    const { isLoading, form, onSubmit, isPasswordVisible } = useLoginForm()
+    const { isLoading, form, onSubmit, isPasswordVisible, onEyeIconClick } =
+        useLoginForm()
 
     return (
         <div className="flex w-full flex-col gap-4 p-4">
@@ -24,7 +25,14 @@ function LoginForm() {
                         type={isPasswordVisible ? 'text' : 'password'}
                         endContent={
                             <div className="flex h-full items-center">
-                                <IconButton icon={faEye} />
+                                <IconButton
+                                    slotProps={{
+                                        Button: {
+                                            onPress: () => onEyeIconClick(),
+                                        },
+                                    }}
+                                    icon={faEye}
+                                />
                             </div>
                         }
                         {...form.register('password')}

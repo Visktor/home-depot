@@ -3,7 +3,7 @@ import { createSlice, isAnyOf } from '@reduxjs/toolkit'
 
 const initialState = {
     isLoading: false,
-    isPasswordVisible: false
+    isPasswordVisible: false,
 }
 
 const sliceLoginForm = createSlice({
@@ -11,6 +11,9 @@ const sliceLoginForm = createSlice({
     initialState,
     reducers: {
         reset: () => initialState,
+        setPasswordVisibility: state => {
+            state.isPasswordVisible = !state.isPasswordVisible
+        },
     },
     selectors: {
         isLoading: state => state.isLoading,
@@ -32,5 +35,7 @@ const sliceLoginForm = createSlice({
 })
 
 const reducer = sliceLoginForm.reducer
+
+export const { setPasswordVisibility, reset } = sliceLoginForm.actions
 
 export { reducer as reducer_loginForm, sliceLoginForm }

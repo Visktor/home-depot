@@ -11,8 +11,8 @@ function IconButton({
 }: {
     icon: IconProp
     slotProps?: {
-        Button: Partial<ButtonProps>
-        Icon: Partial<FontAwesomeIconProps>
+        Button?: Partial<ButtonProps>
+        Icon?: Partial<FontAwesomeIconProps>
     }
 }) {
     return (
