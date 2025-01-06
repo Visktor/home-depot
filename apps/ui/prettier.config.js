@@ -7,4 +7,5 @@ export default {
     useTabs: false,
     endOfLine: 'auto',
     plugins: ['prettier-plugin-tailwindcss'],
+    arrowParens: 'avoid',
 }

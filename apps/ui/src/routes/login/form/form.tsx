@@ -1,25 +1,39 @@
 import { Button, Input } from '@nextui-org/react'
-import { Form, useForm } from 'react-hook-form'
-import { defaulsLoginForm } from '../../../lib/schema/login'
+import { Form } from 'react-hook-form'
+import { useLoginForm } from './form.container'
+import { faEye } from '@fortawesome/free-solid-svg-icons'
+import { IconButton } from '#/components/IconButton'
 
 function LoginForm() {
-    const form = useForm({
-        defaultValues: defaulsLoginForm,
-    })
+    const { isLoading, form, onSubmit, isPasswordVisible } = useLoginForm()
 
     return (
-        <div className="flex w-full flex-col gap-4 bg-red-100">
-            <Form {...form}>
-                <div className="flex flex-col gap-2">
-                    <Input label="Email" {...form.register('email')} />
+        <div className="flex w-full flex-col gap-4 p-4">
+            <Form {...form} onSubmit={({ data }) => onSubmit(data)}>
+                <fieldset className="flex flex-col gap-2">
+                    <legend className="sr-only">Login Form</legend>
                     <Input
-                        type={'password'}
+                        label="Email"
+                        id="email"
+                        type="email"
+                        {...form.register('email')}
+                    />
+                    <Input
                         label="Password"
+                        id="password"
+                        type={isPasswordVisible ? 'text' : 'password'}
+                        endContent={
+                            <div className="flex h-full items-center">
+                                <IconButton icon={faEye} />
+                            </div>
+                        }
                         {...form.register('password')}
                     />
-                </div>
-                <div className="flex justify-end">
-                    <Button variant="shadow">{'Submit'}</Button>
+                </fieldset>
+                <div className="mt-2 flex justify-end">
+                    <Button isLoading={isLoading} variant="shadow">
+                        {'Submit'}
+                    </Button>
                 </div>
             </Form>
         </div>
