@@ -19,8 +19,8 @@ function useLoginForm() {
         resolver: yupResolver(SCHEMAS.login),
     })
 
-    const onSubmit = (data: TSCHEMAS['login']) => {
-        dispatch(SERVICES.login.login(data))
+    const onSubmit = async (data: TSCHEMAS['login']) => {
+        const { payload } = await dispatch(SERVICES.login.login(data))
     }
 
     useEffect(

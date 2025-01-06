@@ -10,12 +10,16 @@ function LoginForm() {
 
     return (
         <div className="flex w-full flex-col gap-4 p-4">
-            <Form {...form} onSubmit={({ data }) => onSubmit(data)}>
+            <Form
+                control={form.control}
+                onSubmit={({ data }) => onSubmit(data)}
+            >
                 <fieldset className="flex flex-col gap-2">
                     <legend className="sr-only">Login Form</legend>
                     <Input
                         label="Email"
                         id="email"
+                        isDisabled={isLoading}
                         type="email"
                         {...form.register('email')}
                     />
@@ -23,6 +27,7 @@ function LoginForm() {
                         label="Password"
                         id="password"
                         type={isPasswordVisible ? 'text' : 'password'}
+                        isDisabled={isLoading}
                         endContent={
                             <div className="flex h-full items-center">
                                 <IconButton
@@ -39,7 +44,11 @@ function LoginForm() {
                     />
                 </fieldset>
                 <div className="mt-2 flex justify-end">
-                    <Button isLoading={isLoading} variant="shadow">
+                    <Button
+                        type="submit"
+                        isLoading={isLoading}
+                        variant="shadow"
+                    >
                         {'Submit'}
                     </Button>
                 </div>
