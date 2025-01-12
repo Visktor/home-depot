@@ -1,4 +1,4 @@
-import { SERVICES_STATUS } from '#/services/main'
+import { SERVICES } from '#/services/main'
 import { createSlice, isAnyOf } from '@reduxjs/toolkit'
 
 const initialState = {
@@ -21,13 +21,13 @@ const sliceLoginForm = createSlice({
     extraReducers: builder =>
         builder
             .addMatcher(
-                isAnyOf(...SERVICES_STATUS.login.pending.all),
+                isAnyOf(...SERVICES.login.statuses.pending.all),
                 state => {
                     state.isLoading = true
                 },
             )
             .addMatcher(
-                isAnyOf(...SERVICES_STATUS.login.settled.all),
+                isAnyOf(...SERVICES.login.statuses.settled.all),
                 state => {
                     state.isLoading = false
                 },

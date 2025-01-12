@@ -1,39 +1,59 @@
 import axios from 'axios'
-import { withCatcher } from '../../utils/catcher';
+import { withCatcher } from '../../utils/catcher'
+import { appEnv } from '#/utils/env'
 
 const instance = axios.create({
-    baseURL: 'https://jsonplaceholder.typicode.com',
+    baseURL: appEnv.HOME_DEPOT_API_URL,
 })
 
-const httpApi = {
-    get: async <T>(...rest: Parameters<typeof instance.get<T>>) => {
-        const [err, res] = await withCatcher(instance.get<T>(...rest))
-        if (err) {
-            return { error: err.message }
-        }
-        return { data: res.data }
+const homeDepotApi = {
+    get: async <T = Record<any, any>>(
+        ...rest: Parameters<typeof instance.get<T>>
+    ) => {
+        const [err, response] = await withCatcher(instance.get<T>(...rest), [
+            axios.AxiosError<{ message: string }>,
+        ])
+
+        return [err?.response?.data, response?.data] as
+            | [{ message: string }, undefined]
+            | [undefined, T]
     },
-    post: async <T>(...rest: Parameters<typeof instance.post<T>>) => {
-        const [err, res] = await withCatcher(instance.post<T>(...rest))
-        if (err) {
-            return { error: err.message }
-        }
-        return { data: res.data }
+
+    post: async <T = Record<any, any>>(
+        ...rest: Parameters<typeof instance.post<T>>
+    ) => {
+        const [err, response] = await withCatcher(instance.post<T>(...rest), [
+            axios.AxiosError<{ message: string }>,
+        ])
+
+        return [err?.response?.data, response?.data] as
+            | [{ message: string }, undefined]
+            | [undefined, T]
     },
-    put: async <T>(...rest: Parameters<typeof instance.put<T>>) => {
-        const [err, res] = await withCatcher(instance.put<T>(...rest))
-        if (err) {
-            return { error: err.message }
-        }
-        return { data: res.data }
+
+    put: async <T = Record<any, any>>(
+        ...rest: Parameters<typeof instance.put<T>>
+    ) => {
+        const [err, response] = await withCatcher(instance.put<T>(...rest), [
+            axios.AxiosError<{ message: string }>,
+        ])
+
+        return [err?.response?.data, response?.data] as
+            | [{ message: string }, undefined]
+            | [undefined, T]
     },
-    delete: async <T>(...rest: Parameters<typeof instance.delete<T>>) => {
-        const [err, res] = await withCatcher(instance.delete<T>(...rest))
-        if (err) {
-            return { error: err.message }
-        }
-        return { data: res.data }
+
+    delete: async <T = Record<any, any>>(
+        ...rest: Parameters<typeof instance.delete<T>>
+    ) => {
+        const [err, response] = await withCatcher(instance.delete<T>(...rest), [
+            axios.AxiosError<{ message: string }>,
+        ])
+
+        return [err?.response?.data, response?.data] as
+            | [{ message: string }, undefined]
+            | [undefined, T]
     },
 }
 
-export { httpApi }
+export { homeDepotApi as httpApi }

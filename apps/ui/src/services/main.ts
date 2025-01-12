@@ -1,11 +1,7 @@
-import { service_login, service_status_login } from './login'
+import loginService from './login'
 
 const SERVICES = {
-    login: service_login,
+    login: loginService,
 }
 
-const SERVICES_STATUS = {
-    login: service_status_login,
-}
-
-export { SERVICES, SERVICES_STATUS }
+export { SERVICES }

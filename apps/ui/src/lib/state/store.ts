@@ -11,6 +11,7 @@ const appStateStore = configureStore({
 export type RootState = ReturnType<typeof appStateStore.getState>
 
 export type AppDispatch = typeof appStateStore.dispatch
+
 export const useAppDispatch = useDispatch.withTypes<AppDispatch>()
 
 export { appStateStore }

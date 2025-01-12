@@ -3,9 +3,7 @@ function withCatcher<T, E extends new (message?: string) => Error>(
     errorsToCatch?: E[],
 ): Promise<[undefined, T] | [InstanceType<E>]> {
     return promise
-        .then(
-            data => [undefined, data] as [undefined, T]
-        )
+        .then(data => [undefined, data] as [undefined, T])
         .catch(err => {
             if (errorsToCatch === undefined) {
                 return [err]

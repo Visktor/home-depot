@@ -20,7 +20,16 @@ function useLoginForm() {
     })
 
     const onSubmit = async (data: TSCHEMAS['login']) => {
-        const { payload } = await dispatch(SERVICES.login.login(data))
+        const [error, response] = await dispatch(
+            SERVICES.login.login(data),
+        ).unwrap()
+
+        if (error) {
+            return
+        }
+
+        // #TODO: Handle response
+        console.log(response)
     }
 
     useEffect(
