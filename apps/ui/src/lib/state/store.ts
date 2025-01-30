@@ -6,12 +6,17 @@ const appStateStore = configureStore({
     reducer: {
         loginForm: reducer_loginForm,
     },
+    middleware: getDefaultMiddleware =>
+        getDefaultMiddleware({
+            immutableCheck: false,
+            serializableCheck: false,
+        }),
 })
 
-export type RootState = ReturnType<typeof appStateStore.getState>
+type RootState = ReturnType<typeof appStateStore.getState>
 
-export type AppDispatch = typeof appStateStore.dispatch
+type AppDispatch = typeof appStateStore.dispatch
 
-export const useAppDispatch = useDispatch.withTypes<AppDispatch>()
+const useAppDispatch = useDispatch.withTypes<AppDispatch>()
 
-export { appStateStore }
+export { appStateStore, useAppDispatch, type RootState, type AppDispatch }

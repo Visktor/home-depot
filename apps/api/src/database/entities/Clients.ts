@@ -1,27 +1,18 @@
 import { BelongsTo, Column, DataType } from 'sequelize-typescript';
 import { InferAttributes, Optional } from 'sequelize';
-import { ByBusinessTable, ByBusinessEntity } from '../base-entities/byBusiness';
 import { Profile } from './Profiles';
+import { ComplexEntity, ComplexTable } from '../base-entities/complex';
 
-@ByBusinessTable({
-  defaultScope: {
-    attributes: {
-      exclude: ['password', 'isOwner'],
-    },
-  },
-})
-class User extends ByBusinessEntity {
+@ComplexTable()
+class Client extends ComplexEntity {
   @Column({ allowNull: false, type: DataType.STRING })
   name: string;
 
   @Column({ allowNull: false, type: DataType.STRING })
   email: string;
 
-  @Column({ allowNull: false, type: DataType.BOOLEAN })
-  isOwner: boolean;
-
   @Column({ allowNull: false, type: DataType.STRING })
-  password: string;
+  phone: string;
 
   @Column({ allowNull: false, type: DataType.INTEGER })
   profileId: number;
@@ -30,7 +21,7 @@ class User extends ByBusinessEntity {
   profile: Profile;
 }
 
-type UserAttributes = InferAttributes<User>;
-type UserCreationAttributes = Optional<UserAttributes, 'id'>;
+type ClientAttributes = InferAttributes<Client>;
+type ClientCreationAttributes = Optional<ClientAttributes, 'id'>;
 
-export { User, type UserAttributes, type UserCreationAttributes };
+export { Client, type ClientAttributes, type ClientCreationAttributes };

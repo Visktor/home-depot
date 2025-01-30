@@ -4,8 +4,8 @@ import { TSCHEMAS } from '#/lib/schema/global'
 import { httpApi } from '#/lib/http-api/axios'
 
 const services = {
-    login: createAsyncThunk('login', async (data: TSCHEMAS['login']) =>
-        httpApi.post('/login', data),
+    login: createAsyncThunk('login', async (data: TSCHEMAS['login_form']) =>
+        httpApi.post<{ data: string }>('/login', data),
     ),
 
     recover_password: createAsyncThunk('recover_password', async () => {}),

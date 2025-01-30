@@ -6,6 +6,7 @@ import { SERVICES } from '#/services/main'
 import { SCHEMAS, TSCHEMAS } from '#/lib/schema/global'
 import { useAppDispatch } from '#/lib/state/store'
 import { useEffect } from 'react'
+import { useAsyncDispatch } from '#/hooks/useAsyncDispatch'
 
 function useLoginForm() {
     const { isLoading, isPasswordVisible } = useSelector(
@@ -13,16 +14,17 @@ function useLoginForm() {
     )
 
     const dispatch = useAppDispatch()
+    const asyncDispatch = useAsyncDispatch()
 
     const form = useForm({
-        defaultValues: SCHEMAS.login.getDefault(),
-        resolver: yupResolver(SCHEMAS.login),
+        defaultValues: SCHEMAS.login_form.getDefault(),
+        resolver: yupResolver(SCHEMAS.login_form),
     })
 
-    const onSubmit = async (data: TSCHEMAS['login']) => {
-        const [error, response] = await dispatch(
+    const onSubmit = async (data: TSCHEMAS['login_form']) => {
+        const [error, response] = await asyncDispatch(
             SERVICES.login.login(data),
-        ).unwrap()
+        )
 
         if (error) {
             return
