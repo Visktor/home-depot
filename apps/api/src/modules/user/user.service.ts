@@ -1,9 +1,11 @@
+import { Profile } from '#/database/entities/Profiles';
 import {
   User,
   UserAttributes,
   UserCreationAttributes,
 } from '#/database/entities/Users';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { WhereOptions } from 'sequelize';
 
 @Injectable()
 export class UserService {
@@ -15,10 +17,19 @@ export class UserService {
     return User.findByPk(id);
   }
 
-  findOne(opts: Partial<UserAttributes>) {
-    return User.findOne<User>({
+  async findOne(opts: WhereOptions<User>) {
+    const user = await User.findOne<User>({
       where: opts,
+      include: {
+        model: Profile,
+      },
     });
+
+    if (!user) {
+      throw new NotFoundException('Usuário não encontrado');
+    }
+
+    return user.get({ plain: true }) as UserAttributes;
   }
 
   create(attributes: UserCreationAttributes) {

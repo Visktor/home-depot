@@ -16,6 +16,7 @@ export const databaseProviders = [
       const sequelize = new Sequelize({
         dialect: 'postgres',
         ...envService.getDbConfig(),
+        logging: false,
       });
       sequelize.addModels([
         Business,

@@ -30,8 +30,7 @@ function useLoginForm() {
             return
         }
 
-        // #TODO: Handle response
-        console.log(response)
+        console.log(response.data)
     }
 
     useEffect(

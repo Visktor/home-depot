@@ -2,7 +2,7 @@ import { Dto } from '#/utils/types';
 import { z } from 'zod';
 
 const AuthSchemas = {
-  login: z.object({
+  signIn: z.object({
     email: z.string().email(),
     password: z.string().min(8),
   }),
@@ -16,6 +16,6 @@ const AuthSchemas = {
   }),
 };
 
-type LoginDto = Dto<typeof AuthSchemas>;
+type AuthDto = Dto<typeof AuthSchemas>;
 
-export { AuthSchemas, LoginDto };
+export { AuthSchemas, AuthDto };

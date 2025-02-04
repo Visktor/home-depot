@@ -1,30 +1,21 @@
-import { Injectable } from '@nestjs/common';
-import { LoginDto } from './auth.schemas';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { AuthDto } from './auth.schemas';
 import { UserService } from '../user/user.service';
+import { withCatcher } from 'withCatcher';
 
 @Injectable()
 export class AuthService {
   constructor(private userService: UserService) {}
 
-  async login(data: LoginDto['login']) {
-    const user = await this.userService.findOne({
-      email: data.email,
-    });
+  async signIn(data: AuthDto['signIn']) {
+    const [error, user] = await withCatcher(
+      this.userService.findOne({
+        email: data.email,
+      }),
+    );
 
-    if (!user) {
-      return {
-        error: 'User not found',
-        success: false,
-      };
+    if (error) {
+      throw new UnauthorizedException('Credenciais inválidas');
     }
-
-    // const isPasswordValid = await bcrypt.compare(data.password, user.password);
-
-    // if (!isPasswordValid) {
-    //   return {
-    //     error: 'Invalid password',
-    //     success: false,
-    //   };
-    // }
   }
 }

@@ -3,7 +3,7 @@ import { withCatcher } from '../../utils/catcher'
 import { appEnv } from '#/utils/env'
 
 const instance = axios.create({
-    baseURL: appEnv.HOME_DEPOT_API_URL,
+    baseURL: appEnv.VITE_HOME_DEPOT_API_URL,
 })
 
 const homeDepotApi = {

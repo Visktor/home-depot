@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, ImATeapotException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { z } from 'zod';
 
@@ -15,19 +15,24 @@ class EnvService {
   });
 
   getDbConfig() {
-    return this.dbSchema.parse({
+    const validationResult = this.dbSchema.safeParse({
       host: this.configService.get('DATABASE_HOST'),
       port: this.configService.get('DATABASE_PORT'),
       username: this.configService.get('DATABASE_USER'),
       password: this.configService.get('DATABASE_PASSWORD'),
       database: this.configService.get('DATABASE_NAME'),
     });
+
+    if (!validationResult.success) {
+      throw new ImATeapotException(validationResult.error.message);
+    }
+
+    return validationResult.data;
   }
 
   private readonly jwtSchema = z.object({
     secret: z.string(),
   });
-
   getJwtConfig() {
     return this.jwtSchema.parse({
       secret: this.configService.get('JWT_SECRET'),
